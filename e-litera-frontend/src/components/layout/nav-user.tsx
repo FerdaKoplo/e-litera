@@ -50,11 +50,6 @@ const NavUser = () => {
                 </button>
             </Link>
             <ul className='flex justify-center items-center gap-10'>
-                <Link to={'/home'}>
-                    <li className='hover:scale-110 duration-500'>
-                        Dashboard
-                    </li>
-                </Link>
                 <Link to={'/collections'} >
                     <li className='hover:scale-110 duration-500'>
                         Collections

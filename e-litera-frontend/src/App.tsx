@@ -14,7 +14,6 @@ import ForumDetail from "./pages/user/ForumDetail";
 const Landing = lazy(() => import("./pages/landing/Landing"));
 const Login = lazy(() => import("./pages/auth/login/Login"));
 const Register = lazy(() => import("./pages/auth/register/Register"));
-const Home = lazy(() => import("./pages/user/Home"));
 const Collections = lazy(() => import("./pages/user/Collections"));
 
 const router = createBrowserRouter([
@@ -22,7 +21,6 @@ const router = createBrowserRouter([
   { path: "/login", element: <Login /> },
   { path: "/register", element: <Register /> },
   { path: "*", element:  <NotFound />},
-  { path: "/home", element: <Home /> },
   { path: "/profile", element: <Profile /> },
   { path: "/collections", element: <Collections /> },
   { path: "/books/:id", element: <BookDetail /> },

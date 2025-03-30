@@ -7,7 +7,7 @@ import { forumSchema } from '@/lib/schema'
 import { usePostForumMutation } from '@/store/slice/forum.service'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { title } from 'process'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router'
 import { z } from 'zod'
@@ -32,7 +32,7 @@ const ForumPost = () => {
         title:values.title,
         content:values.content,
     }).unwrap()
-    route('/forum');
+      route('/forum');
     }
     catch (error) {
       console.log("Error Login : " + error)

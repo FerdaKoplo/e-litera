@@ -70,7 +70,8 @@ const Collections = () => {
                         {books?.data?.map((item: Books, i: number) => (
                             <motion.div className={`relative flex flex-col gap-5 shadow-lg p-5 ${i % 2 === 1 ? 'bg-white' : 'bg-purple-50'}  `}
                                 whileHover={{  x: -15, rotateZ: 3, scale: 1.1, transition: { type: "spring", stiffness: 200 } }}
-                                variants={fadeInWidthAnimationVariant} initial="initial"
+                                variants={fadeInWidthAnimationVariant} 
+                                initial="initial"
                                 whileInView={"animate"} 
                                 custom={i} 
                                 viewport={{ once: false, }} >

@@ -1,6 +1,6 @@
 import NavUser from '@/components/layout/nav-user'
 import { useDeleteForumMutation, useGetAllForumQuery } from '@/store/slice/forum.service'
-import React from 'react'
+import React, { useEffect } from 'react'
 import ForumPost from './forum-post/ForumPost'
 import { Link } from 'react-router'
 import { Button } from '@/components/ui/button'
@@ -10,15 +10,16 @@ import { RiDeleteBin5Line } from 'react-icons/ri'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
 import { useUserQuery } from '@/store/slice/auth.service'
-import { motion } from 'framer-motion'
+import { motion, spring } from 'framer-motion'
 import { fadeInAnimationVariant, fadeInReverseAnimationVariant, fadeInWidthBorrowBookAnimationReverseVariant, fadeInWidthBorrowBookAnimationVariant } from '@/components/animation/variant'
 import Loading from '@/components/loading/loading'
 import { IoChatboxEllipsesOutline, IoChatboxEllipsesSharp } from 'react-icons/io5'
 import { toast, Toaster } from 'sonner'
+import { BsPinAngleFill } from 'react-icons/bs'
 
 const Forum = () => {
 
-    const { data: forum, isLoading, isError, refetch } = useGetAllForumQuery({})
+    const { data: forum, isLoading, isError, refetch } = useGetAllForumQuery({}, {refetchOnMountOrArgChange:true})
     const { data: currentUser, isLoading: isUserLoading } = useUserQuery()
     const [deleteForum] = useDeleteForumMutation()
 
@@ -66,8 +67,8 @@ const Forum = () => {
 
                 <div className='grid grid-cols-5 mt-6 gap-10'>
                     {forum.data?.map((item: ForumAll, index: number) => (
-                        <motion.div variants={fadeInAnimationVariant} initial="initial" whileInView={"animate"} viewport={{ once: false, }} custom={index * 3} key={index} className='flex flex-col gap-4 bg-white shadow-lg p-5'>
-                            <h1 className='text-xl font-bold'>#{item.id}</h1>
+                        <motion.div variants={fadeInAnimationVariant} initial="initial" whileInView={"animate"} viewport={{ once: false, }} custom={index * 3} key={index} whileHover={{scale:1.1, rotateZ:-3, transition:spring}} className='mt-10 relative flex flex-col gap-4 bg-white shadow-lg p-5 '>
+                            <p className='absolute top-[-20px] left-[50%] transform -translate-x-1/2 text-2xl '><BsPinAngleFill /></p>
                             <h1 className='text-3xl font-bold'>{item.title}</h1>
                             <p className='text-lg'> Post by : <span className='font-semibold'>{item.user_name}</span></p>
                             <p className='text-xs'>{item.content}</p>
@@ -81,9 +82,7 @@ const Forum = () => {
                                 {currentUser?.id === item.user_id ? (
                                     <Button className='' onClick={() => handleDeleteForum(item.id)}>
                                         Delete Post
-                                    <Toaster position="top-right" richColors />
                                     </Button>
-                                    
                                 ) : (
                                     <Button className='bg-white hover:bg-white text-black hover:text-black'>
                                         Report Post
@@ -93,6 +92,7 @@ const Forum = () => {
                         </motion.div>
                     ))}
                 </div>
+                <Toaster position="top-right" richColors />
             </div>
         </div>
     )

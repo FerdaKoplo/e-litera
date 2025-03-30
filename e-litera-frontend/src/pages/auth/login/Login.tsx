@@ -42,7 +42,7 @@ const Login = () => {
             token: response.data.token, 
             user: response.data 
           }))
-          route("/home")
+          route("/collections")
           toast.success(`Login Berhasil!`);
       }
       catch(error) {
