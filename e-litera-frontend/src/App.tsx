@@ -10,6 +10,8 @@ import BorrowedBookPage from "./pages/user/BorrowedBookPage";
 import Forum from "./pages/user/Forum";
 import ForumPost from "./pages/user/forum-post/ForumPost";
 import ForumDetail from "./pages/user/ForumDetail";
+import EBook from "./pages/user/e-book/EBook";
+import EBookDetail from "./pages/user/e-book/EBookDetail";
 
 const Landing = lazy(() => import("./pages/landing/Landing"));
 const Login = lazy(() => import("./pages/auth/login/Login"));
@@ -22,8 +24,10 @@ const router = createBrowserRouter([
   { path: "/register", element: <Register /> },
   { path: "*", element:  <NotFound />},
   { path: "/profile", element: <Profile /> },
-  { path: "/collections", element: <Collections /> },
-  { path: "/books/:id", element: <BookDetail /> },
+  { path: "/koleksi-cetak", element: <Collections /> },
+  { path: "/koleksi-cetak/:id", element: <BookDetail /> },
+  { path: "/koleksi-digital", element: <EBook /> },
+  { path: "/koleksi-digital/:id", element: <EBookDetail /> },
   { path: "/borrowed-books", element: <BorrowedBookPage /> },
   { path: "/forum", element: <Forum /> },
   { path: "/forum/forum-post", element: <ForumPost /> },

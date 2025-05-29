@@ -14,6 +14,20 @@ export const fadeInAnimationVariant = {
     })
 }
 
+export const fadeInWidthReverseAnimationVariant = {
+    initial: {
+        opacity: 0,
+        x: 100 
+    },
+    animate: (index: number) => ({
+        opacity: 1,
+        x: 0,
+        transition: {
+            delay: 0.15 * index
+        }
+    })
+}
+
 export const fadeInReverseAnimationVariant = {
     initial: {
         opacity: 0,

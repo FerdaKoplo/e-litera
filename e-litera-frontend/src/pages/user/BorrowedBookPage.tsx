@@ -1,6 +1,6 @@
 import { useGetAllBorrowedBooksQuery, useReturnBorrowedBookMutation } from '@/store/slice/borrow.service'
 import { BorrowedBook } from "@/interface/BorrowedBook";
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import NavUser from '@/components/layout/nav-user';
 import { data } from 'react-router';
 import { Button } from '@/components/ui/button';
@@ -23,10 +23,9 @@ import {
 } from "@/components/ui/pagination"
 
 const BorrowedBookPage = () => {
-
   const [page, setPage] = useState(1)
   const [search, setSearch] = useState("")
-
+  const [returnedBookIds, setReturnedBookIds] = useState<number[]>([])
 
   const { data: borrow, isLoading, isError, refetch } = useGetAllBorrowedBooksQuery({ page, search })
   const [returnBook] = useReturnBorrowedBookMutation()
@@ -34,26 +33,35 @@ const BorrowedBookPage = () => {
 
   const totalPages = borrow?.pagination?.total_pages || 0
   const totalItems = borrow?.pagination?.total_items || 0
+  
+  const visibleBooks = useMemo(() => {
+    if (!borrow?.data) return []
 
-  if (isLoading) return <Loading />
-  if (isError) return <p>Error Fetching Borrowed Books!</p>
+    return borrow.data.filter((item: BorrowedBook) =>
+      item.user_id === currentUser?.id &&
+      item.status !== "returned"
+    )
+  }, [borrow, currentUser, returnedBookIds])
 
   const handleReturn = async (borrowedId: number) => {
     try {
       await returnBook(borrowedId).unwrap()
       toast.success(`Buku berhasil dikembalikan!`)
+      setReturnedBookIds((prev) => [...prev, borrowedId])
       refetch()
     } catch (error) {
       console.log(error)
       alert("Book failed to return!")
     }
   }
-
-
+  
+  if (isLoading) return <Loading />
+  if (isError) return <p>Error Fetching Borrowed Books!</p>
 
   return (
     <div>
       <NavUser />
+      <Toaster position="top-right" richColors />
       <div className='px-32'>
         <div className='flex flex-col gap-5'>
           <div className='text-4xl mt-5 gap-3 flex items-center'>
@@ -82,10 +90,10 @@ const BorrowedBookPage = () => {
           </div>
         </div>
         <div className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {borrow?.data?.filter((item: BorrowedBook) => item.user_id === currentUser?.id).length === 0 ? (
+          {visibleBooks.length === 0 ? (
             <p className='font-bold'>Haven't borrowed any books yet</p>
           ) : (
-            borrow?.data?.map((item: BorrowedBook, index: number) => (
+            visibleBooks.map((item: BorrowedBook, index: number) => (
               item.user_id === currentUser?.id && (
                 <motion.div
                   key={index}
@@ -116,7 +124,6 @@ const BorrowedBookPage = () => {
                       className="text-white rounded-lg w-full"
                     >
                       Return Book
-                      <Toaster position="top-right" richColors />
                     </Button>
                   ) : (
                     <div>
@@ -129,7 +136,7 @@ const BorrowedBookPage = () => {
             ))
           )}
         </div>
-        {totalPages > 1  && (
+        {totalPages > 1 && (
           <div className="flex justify-between mt-10">
             <Pagination>
               <PaginationContent>
@@ -142,7 +149,7 @@ const BorrowedBookPage = () => {
                   <PaginationItem key={pageNum}>
                     <PaginationLink
                       href="#"
-                      className={`${pageNum === page ? 'bg-purple-400 text-white' : 'bg-white text-black' }`}
+                      className={`${pageNum === page ? 'bg-purple-400 text-white' : 'bg-white text-black'}`}
                       onClick={() => setPage(pageNum)}
                       isActive={pageNum === page}
                     >

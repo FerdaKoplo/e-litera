@@ -19,7 +19,7 @@ import { BsPinAngleFill } from 'react-icons/bs'
 
 const Forum = () => {
 
-    const { data: forum, isLoading, isError, refetch } = useGetAllForumQuery({}, {refetchOnMountOrArgChange:true})
+    const { data: forum, isLoading, isError, refetch } = useGetAllForumQuery({}, { refetchOnMountOrArgChange: true })
     const { data: currentUser, isLoading: isUserLoading } = useUserQuery()
     const [deleteForum] = useDeleteForumMutation()
 
@@ -39,6 +39,7 @@ const Forum = () => {
     return (
         <div>
             <NavUser />
+            <Toaster position="top-right" richColors />
             <div className='px-32 mt-5'>
                 <div className='flex flex-col gap-5'>
                     <div className='text-4xl mt-5 gap-3 flex items-center'>
@@ -55,19 +56,11 @@ const Forum = () => {
                     <motion.p variants={fadeInAnimationVariant} initial="initial" whileInView={"animate"} viewport={{ once: false, }}>
                         Lorem ipsum dolor sit amet consectetur
                     </motion.p>
-                    <motion.div variants={fadeInWidthBorrowBookAnimationReverseVariant} initial="initial" whileInView={"animate"} viewport={{ once: false, }}>
-                        <Link to={'/forum/forum-post'} className=' '>
-                            <Button>
-                                Create Post
-                                <LuCirclePlus />
-                            </Button>
-                        </Link>
-                    </motion.div>
                 </div>
 
                 <div className='grid grid-cols-5 mt-6 gap-10'>
                     {forum.data?.map((item: ForumAll, index: number) => (
-                        <motion.div variants={fadeInAnimationVariant} initial="initial" whileInView={"animate"} viewport={{ once: false, }} custom={index * 3} key={index} whileHover={{scale:1.1, rotateZ:-3, transition:spring}} className='mt-10 relative flex flex-col gap-4 bg-white shadow-lg p-5 '>
+                        <motion.div variants={fadeInAnimationVariant} initial="initial" whileInView={"animate"} viewport={{ once: false, }} custom={index * 3} key={index} whileHover={{ scale: 1.1, rotateZ: -3, transition: spring }} className='mt-10 relative flex flex-col gap-4 bg-white shadow-lg p-5 '>
                             <p className='absolute top-[-20px] left-[50%] transform -translate-x-1/2 text-2xl '><BsPinAngleFill /></p>
                             <h1 className='text-3xl font-bold'>{item.title}</h1>
                             <p className='text-lg'> Post by : <span className='font-semibold'>{item.user_name}</span></p>
@@ -92,7 +85,11 @@ const Forum = () => {
                         </motion.div>
                     ))}
                 </div>
-                <Toaster position="top-right" richColors />
+                <Link to={'/forum/forum-post'}>
+                    <button className='bg-black bottom-8 fixed right-8 text-white rounded-full text-4xl'>
+                        <LuCirclePlus />
+                    </button>
+                </Link>
             </div>
         </div>
     )
