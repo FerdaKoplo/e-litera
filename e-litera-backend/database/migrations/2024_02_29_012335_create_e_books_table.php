@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('books', function (Blueprint $table) {
+        Schema::create('e_books', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->string('author');
@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('isbn')->unique();
             $table->text('description')->nullable();
             $table->string('cover_image')->nullable();
+            $table->string('pdf_url')->nullable();
             $table->integer('year_published');
             $table->string('publisher');
-            $table->enum('status', ['available','borrowed'])->default('available');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('books');
+        Schema::dropIfExists('e_books');
     }
 };

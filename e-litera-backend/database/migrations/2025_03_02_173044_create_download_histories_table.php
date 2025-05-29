@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('download_histories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('book_id')->constrained('books')->onDelete('cascade');
+            $table->foreignId('e_book_id')->constrained('e_books')->onDelete('cascade');
             $table->timestamp('downloaded_at')->useCurrent();
         });
     }

@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\BookResource\Pages;
-use App\Filament\Resources\BookResource\RelationManagers;
-use App\Models\Book;
+use App\Filament\Resources\EBookResource\Pages;
+use App\Filament\Resources\EBookResource\RelationManagers;
+use App\Models\EBook;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,13 +13,11 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class BookResource extends Resource
+class EBookResource extends Resource
 {
-    protected static ?string $navigationGroup = 'Books';
+    protected static ?string $model = EBook::class;
 
-    protected static ?string $model = Book::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-book-open';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
@@ -40,7 +38,11 @@ class BookResource extends Resource
                 Forms\Components\Textarea::make('description')
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('cover_image')
+                    ->directory('cover_image')
                     ->image(),
+                Forms\Components\FileUpload::make('pdf_url')
+                    ->directory('ebook_pdf')
+                    ->acceptedFileTypes(['application/pdf']),
                 Forms\Components\TextInput::make('year_published')
                     ->required()
                     ->numeric(),
@@ -71,7 +73,6 @@ class BookResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('publisher')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('status'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -104,9 +105,9 @@ class BookResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListBooks::route('/'),
-            'create' => Pages\CreateBook::route('/create'),
-            'edit' => Pages\EditBook::route('/{record}/edit'),
+            'index' => Pages\ListEBooks::route('/'),
+            'create' => Pages\CreateEBook::route('/create'),
+            'edit' => Pages\EditEBook::route('/{record}/edit'),
         ];
     }
 }

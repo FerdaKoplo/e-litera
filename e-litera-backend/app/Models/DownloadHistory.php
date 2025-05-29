@@ -17,7 +17,7 @@ class DownloadHistory extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function book(): BelongsTo{
-        return $this->belongsTo(Book::class);
+    public function ebook(): BelongsTo{
+        return $this->belongsTo(EBook::class);
     }
 }
