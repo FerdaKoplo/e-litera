@@ -46,11 +46,11 @@ const NavUser = () => {
 
             <Link to={"/"}>
                 <button className='text-xl flex items-center gap-1 '>
-                    <span className='px-2 rounded-md  bg-gradient-to-t  from-violet-500  to-purple-700 dark:from-white  dark:to-white dark:text-violet-600  font-bold text-white'>E</span><span className='text-purple-800 dark:text-white font-bold'>-</span>
+                    <span className='px-2 rounded-md  bg-gradient-to-t  from-violet-500  to-purple-700 dark:from-white  dark:to-white dark:text-black  font-bold text-white'>E</span><span className='text-purple-800 dark:text-white font-bold'>-</span>
                     <span className='font-semibold'>Litera</span>
                 </button>
             </Link>
-            <ul className='flex justify-center items-center gap-10'>
+            <ul className='flex justify-center items-center gap-10 font-semibold'>
                 <Link to={'/koleksi-cetak'} >
                     <li className='hover:scale-110 duration-500'>
                         Koleksi Cetak

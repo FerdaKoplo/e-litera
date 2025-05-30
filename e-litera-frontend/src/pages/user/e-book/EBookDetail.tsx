@@ -12,20 +12,36 @@ import { useGetDetailEBookQuery } from '@/store/slice/ebooks.service';
 import BookNotFound from '@/pages/error/book-detail/book-notFound';
 import { IoMdDownload, IoMdShare } from 'react-icons/io';
 import { Share } from 'lucide-react';
+import { usePostDownloadCountMutation } from '@/store/slice/download.service';
+import { toast, Toaster } from 'sonner';
+import Book3D from '@/components/3d-item/book3d';
 
 const EBookDetail = () => {
     const { id } = useParams();
-
     const { data: book, error, isLoading } = useGetDetailEBookQuery(id);
+
+    const [postDownloadHistory] = usePostDownloadCountMutation()
+
+    const handleDownload = async () => {
+        try {
+            await postDownloadHistory({
+                e_book_id: item.id,
+                id: item.id
+            }).unwrap()
+            window.open(item.pdf_url, '_blank')
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     if (isLoading) return < Loading />
     if (error) return <BookNotFound />
     if (!book?.data) return <p>No book found!</p>;
-
     const item = book.data
 
+
     return (
-        <div className="transition-all duration-500 dark:bg-gradient-to-b dark:from-black dark:to-violet-950 flex flex-col gap-10">
+        <div className="transition-all duration-500 dark:bg-black flex flex-col gap-10">
             <NavUser />
             <div
                 className="min-h-screen dark:text-white flex flex-col justify-center items-center "
@@ -33,13 +49,20 @@ const EBookDetail = () => {
                 <div className='flex  items-center'>
                     <div className='flex flex-col gap-20 items-start'>
                         <div className='flex items-center gap-20'>
-                            <motion.div className="relative z-20 mt-5" variants={fadeInWidthAnimationVariant}
+                            {/* <motion.div className="relative z-20 mt-5" variants={fadeInWidthAnimationVariant}
                                 initial="initial"
                                 whileInView="animate"
                                 viewport={{ once: true }}>
                                 <img src={item.cover_image} alt={item.book_title} width={200} className="border-r-2 border-y-2 border-black dark:border-violet-300" />
                                 <div className="absolute inset-y-[5%] w-[120%] grid place-content-center -z-20 bg-gradient-to-br from-violet-600 to-purple-400 dark:bg-gradient-to-tr dark:from-black dark:to-violet-600 shadow-lg border-r-2 border-y-2 dark:border-violet-300 border-black" />
-                            </motion.div>
+                            </motion.div> */}
+                            <Book3D
+                                src={item.cover_image}
+                                alt={item.book_title}
+                                width={200}       
+                                height={280}
+                                edgeColor="#000000"
+                            />
                             <div className='flex flex-col gap-2'>
                                 <motion.p className="text-2xl font-bold text-gray-800 dark:text-white" variants={fadeInReverseAnimationVariant}
                                     initial="initial"
@@ -59,7 +82,8 @@ const EBookDetail = () => {
                                 <motion.p custom={1} variants={fadeInReverseAnimationVariant}
                                     initial="initial"
                                     whileInView="animate"
-                                    viewport={{ once: true }} className='text-sm px-3 py-1 rounded-md border-2 border-black dark:border-violet-600 font-bold  dark:text-white  w-fit'>{item.category_name}</motion.p>
+                                    viewport={{ once: true }} className='text-sm px-3 py-1 rounded-md border-2 border-black dark:border-violet-600 font-bold  dark:text-white  w-fit'>{item.category_name}
+                                </motion.p>
                             </div>
                         </div>
                         <div className='flex flex-col gap-10'>
@@ -91,10 +115,10 @@ const EBookDetail = () => {
                             </div>
                         </div>
                         <div className='w-full flex gap-4 flex-row-reverse '>
-                            <a href={item.pdf_url} target='_blank' className='rounded-lg font-bold dark:bg-transparent dark:text-white dark:border-2 justify-center  dark:border-violet-600 flex items-center w-full gap-2'>
+                            <button onClick={handleDownload} className='rounded-lg font-bold dark:bg-transparent dark:text-white dark:border-2 justify-center  dark:border-violet-600 flex items-center w-full gap-2'>
                                 Unduh PDF
                                 <IoMdDownload />
-                            </a>
+                            </button>
                             <Button className='dark:bg-transparent font-bold dark:text-white dark:border-2 dark:border-violet-600'>
                                 <IoMdShare />
                             </Button>
