@@ -66,7 +66,7 @@ const Login = () => {
             <span className='font-semibold text'>Litera</span>
           </h1>
         </motion.div>
-        <div className='md:w-1/3 z-50 bg-white flex flex-col justify-center gap-10 p-10 shadow-lg '>
+        <div className='md:w-1/3 z-50 bg-white dark:bg-black flex flex-col justify-center gap-10 p-10 shadow-lg '>
           <div className='flex flex-col gap-2'>
             <h1 className='text-3xl font-bold'>Login</h1>
             <div className='flex items-center gap-2'>
@@ -104,7 +104,8 @@ const Login = () => {
               />
 
               <div className='flex items-center gap-16'>
-                <Button type="submit" disabled={isLoading} className='bg-purple-500 hover:bg-purple-700'>
+                <Button type="submit" disabled={isLoading} className='dark:bg-black dark:text-white dark:border dark:border-purple-500 dark:hover:bg-purple-500 bg-purple-500 hover:bg-purple-700'>
+
                   {isLoading ? "Logging in..." : "Login"}
                 </Button>
               </div>

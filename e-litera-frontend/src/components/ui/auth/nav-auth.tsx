@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
+import ThemeToggle from "../toggle-theme";
 
 const NavAuth = () => {
     
@@ -23,6 +24,7 @@ const NavAuth = () => {
             </button>
         </Link>
         <div className="flex items-center gap-10">
+            <ThemeToggle />
             <Link to={'/login'}>
                   <button className='text-xl flex gap-2 items-center'>
                       <span className='bg-gradient-to-t from-violet-500 px-2 py-1 rounded-md to-purple-700 font-bold text-white'>Sign</span>

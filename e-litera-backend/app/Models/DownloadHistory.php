@@ -9,9 +9,11 @@ class DownloadHistory extends Model
 {
     protected $fillable = [
         'user_id',
-        'book_id',
+        'e_book_id',
         'downloaded_at'
     ];
+
+     public $timestamps = false;
 
     public function user(): BelongsTo{
         return $this->belongsTo(User::class);

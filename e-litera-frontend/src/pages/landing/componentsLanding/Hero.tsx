@@ -51,7 +51,6 @@ const Hero = () => {
             <img src="/assets/landingAssets/Hero.png" alt="img" width={500} className='' style={{transform:"translateZ(75px)", transformStyle:"preserve-3d",}}/>
         </motion.div>
 
-      {/* Content of The Text */}
         <div className='flex flex-col gap-10'>
             <h1 className='text-5xl font-semibold flex gap-5'>Welcome To 
               <div className='flex items-center gap-2'>

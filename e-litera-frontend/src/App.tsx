@@ -24,7 +24,7 @@ const router = createBrowserRouter([
   { path: "/register", element: <Register /> },
   { path: "*", element:  <NotFound />},
   { path: "/profile", element: <Profile /> },
-  { path: "/koleksi-cetak", element: <Collections /> },
+  { path: "/koleksi-cetak", element: Collections },
   { path: "/koleksi-cetak/:id", element: <BookDetail /> },
   { path: "/koleksi-digital", element: <EBook /> },
   { path: "/koleksi-digital/:id", element: <EBookDetail /> },

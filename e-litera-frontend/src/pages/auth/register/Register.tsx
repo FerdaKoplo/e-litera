@@ -56,7 +56,7 @@ const Register = () => {
             <span className='font-semibold text'>Litera</span>
           </h1>
         </motion.div>
-        <div className='md:w-1/3 z-50 bg-white flex flex-col justify-center gap-10 p-10 shadow-lg'>
+        <div className='md:w-1/3 z-50 bg-white dark:bg-black flex flex-col justify-center gap-10 p-10 shadow-lg'>
           <div>
             <h1 className='text-3xl font-bold'>Register</h1>
             <div className='flex items-center text-sm gap-2'>
@@ -117,7 +117,7 @@ const Register = () => {
                 )}
               />
               <div className='flex items-center gap-16'>
-                <Button type="submit" className='bg-purple-500 hover:bg-purple-700'>Register</Button>
+                <Button type="submit" className='dark:bg-black dark:text-white dark:border dark:border-purple-500 dark:hover:bg-purple-500 bg-purple-500 hover:bg-purple-700'>Register</Button>
               </div>
             </form>
           </Form>

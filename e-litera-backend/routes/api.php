@@ -33,7 +33,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::patch('/borrowed-records/{id}/return', [BorrowedRecordsController::class, 'returnBook']);
 
     // Download History
-    Route::post('/download-history', [DownloadHistoryController::class, 'postDownloadHistory']);
+    Route::post('/download', [DownloadHistoryController::class, 'postDownloadCount']);
+    Route::get('/download-counts', [DownloadHistoryController::class, 'getDownloadCountByBook']);
 
     // Reviews
     Route::get('/reviews', [ReviewController::class, 'getAllReview']);
